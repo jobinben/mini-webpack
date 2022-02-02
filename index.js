@@ -6,9 +6,9 @@ import traverse from "@babel/traverse"
 
 
 // 获取资源
-const createAsset = (filePath) => {
+const createAsset = (entryPath) => {
     // 1. 获取文件的内容
-    const source = fs.readFileSync(filePath, {
+    const source = fs.readFileSync(entryPath, {
         encoding: 'utf-8'
     })
 
@@ -24,6 +24,7 @@ const createAsset = (filePath) => {
     })
 
     return {
+        filePath: entryPath,
         source,
         deps
     }
@@ -34,6 +35,7 @@ const createAsset = (filePath) => {
 
 // 批量获取资源 一个图的数据结构
 const createGraph = () => {
+    // main.js作为入口
     const mainAsset = createAsset('./example/main.js')
 
     // 用广度优先搜索去遍历所有的资源
